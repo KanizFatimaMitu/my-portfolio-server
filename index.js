@@ -29,12 +29,20 @@ async function run() {
 
     const dataCollection = client.db("portfolio").collection("project")
 
-    // http://localhost:5000/videos
+    // http://localhost:5000/projects
     app.get('/projects', async (req, res) => {
       const query = {};
       const cursor = dataCollection.find(query);
       const projects = await cursor.toArray();
       res.send( projects);
+    })
+
+    // http://localhost:5000/text
+    app.post('/text', async (req, res) => {
+      const newText = req.body;
+      console.log(newText)
+      const addText = await booksCollection.insertOne(newText)
+      res.send(addText)
     })
 
   } 
