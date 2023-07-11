@@ -28,24 +28,32 @@ async function run() {
     console.log("Pinged your deployment. You successfully connected to MongoDB!");
 
     const dataCollection = client.db("portfolio").collection("project")
+    const textCollection = client.db("portfolio").collection("text")
 
     // http://localhost:5000/projects
     app.get('/projects', async (req, res) => {
       const query = {};
       const cursor = dataCollection.find(query);
       const projects = await cursor.toArray();
-      res.send( projects);
+      res.send(projects);
     })
 
     // http://localhost:5000/text
     app.post('/text', async (req, res) => {
       const newText = req.body;
       console.log(newText)
-      const addText = await booksCollection.insertOne(newText)
+      const addText = await textCollection.insertOne(newText)
       res.send(addText)
     })
+    // http://localhost:5000/feedback
+    app.post('/text', async (req, res) => {
+      const newFeedback = req.body;
+      console.log(newFeedback)
+      const addFeedback = await textCollection.insertOne(newFeedback)
+      res.send(addFeedback)
+    })
 
-  } 
+  }
   finally {
 
     // await client.close();
