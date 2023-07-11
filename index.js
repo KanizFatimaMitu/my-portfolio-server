@@ -29,6 +29,7 @@ async function run() {
 
     const dataCollection = client.db("portfolio").collection("project")
     const textCollection = client.db("portfolio").collection("text")
+    const feedbackCollection = client.db("portfolio").collection("feedbackCollection")
 
     // http://localhost:5000/projects
     app.get('/projects', async (req, res) => {
@@ -46,10 +47,10 @@ async function run() {
       res.send(addText)
     })
     // http://localhost:5000/feedback
-    app.post('/text', async (req, res) => {
+    app.post('/feedback', async (req, res) => {
       const newFeedback = req.body;
       console.log(newFeedback)
-      const addFeedback = await textCollection.insertOne(newFeedback)
+      const addFeedback = await feedbackCollection.insertOne(newFeedback)
       res.send(addFeedback)
     })
 
