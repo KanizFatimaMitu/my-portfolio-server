@@ -53,6 +53,13 @@ async function run() {
       const addFeedback = await feedbackCollection.insertOne(newFeedback)
       res.send(addFeedback)
     })
+    // http://localhost:5000/feedback
+    app.get('/feedback', async (req, res) => {
+      const query = {};
+      const cursor = feedbackCollection.find(query);
+      const feedback = await cursor.toArray();
+      res.send(feedback);
+    })
 
   }
   finally {
